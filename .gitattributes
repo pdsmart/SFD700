@@ -1,0 +1,10 @@
+* linguist-vendored
+*.kicad_pcb linguist-vendored=false
+*.kicad_sch linguist-vendored=false
+*.kicad_mod linguist-vendored=false
+*.kicad_wks linguist-vendored=false
+*.asm linguist-vendored=false
+*.c linguist-vendored=false
+*.cpp linguist-vendored=false
+*.pl linguist-vendored=false
+*.sh linguist-vendored=false
