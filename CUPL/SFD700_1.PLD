@@ -1,0 +1,87 @@
+Name         SFD700_GAL1 ;
+PartNo       GAL26CV12 ;
+Date         22/05/2023 ;
+Revision     01 ;
+Designer     Philip Smart ;
+Company      engineers@work ;
+Assembly     SFD700 ;
+Location      ;
+Device       g26cv12 ;
+
+/* *************** CONSTANTS ********************** */
+$DEFINE ON  'b'1
+$DEFINE OFF 'b'0
+
+/* *************** INPUT PINS ********************* */
+PIN  1       = CLK                                   ; /* Registered clock input                                          */ 
+PIN  2       = A0                                    ; /* Address bus A0                                                  */ 
+PIN  3       = A1                                    ; /*             A1                                                  */ 
+PIN  4       = A2                                    ; /*             A2                                                  */ 
+PIN  5       = A3                                    ; /*             A3                                                  */ 
+PIN  6       = A4                                    ; /*             A4                                                  */ 
+PIN  8       = A5                                    ; /*             A5                                                  */ 
+PIN  9       = A6                                    ; /*             A6                                                  */ 
+PIN 10       = A7                                    ; /*             A7                                                  */ 
+PIN 11       = !IORQn                                ; /* Z80 IORQ active low                                             */ 
+PIN 12       = !WRn                                  ; /* Z80 WR active low                                               */ 
+PIN 13       = !RDn                                  ; /* Z80 RD active low                                               */ 
+PIN 14       = NA0                                   ; /* Not used                                                        */ 
+PIN 28       = RESET                                 ; /* System Reset active high                                        */ 
+
+/* *************** OUTPUT PINS ******************** */
+PIN 15       = !DISROMSET                            ; /* Memory Enable (MZ-700) Set.                                     */ 
+PIN 16       = !DISROMCLR                            ; /* Memory Enable (MZ-700) Clear.                                   */ 
+PIN 17       = INTCLK                                ; /* Internal clock generation output                                */ 
+PIN 18       = !INROMHSET                            ; /* Memory Inhibit (MZ-700) Set.                                    */ 
+PIN 19       = !INTEN                                ; /* Interrupt enable.                                               */
+PIN 20       = !IOBUSDIRn                            ; /* I/O BUS direction, low = read into Z80, high = write to FD IC's */ 
+PIN 22       = INHROMCLR                             ; /* Memory Inhibit (MZ-700) Clear.                                  */ 
+PIN 23       = !SIDEn                                ; /* Disk Head Select active low - Address 0xDD                      */ 
+PIN 24       = !FDCRESETn                            ; /* Peripheral Reset active low                                     */ 
+PIN 25       = !DDENn                                ; /* Drive Density select active low - Address 0xDE                  */ 
+PIN 26       = !DRIVEn                               ; /* Disk Drive Select active low - Address 0xDC                     */ 
+PIN 27       = !FDCn                                 ; /* WD1773 Chip Select active low I/O - Address 0xD8 .. 0xDB        */ 
+
+/* Decoder equations. */
+FIELD IOADDR = [A7..0]                               ; /* Address lines considered for I/O devices.                       */
+WD1773SELR   = IORQn & RDn & IOADDR:[D8..DB]         ; /* FDC read select.                                                */
+WD1773SELW   = IORQn & WRn & IOADDR:[D8..DB]         ; /* FDC write select.                                               */
+DRIVESEL     = IORQn & WRn & IOADDR:[DC..DC]         ; /* Drive number select.                                            */
+SIDESEL      = IORQn & WRn & IOADDR:[DD..DD]         ; /* Drive side select.                                              */
+DDENSEL      = IORQn & WRn & IOADDR:[DE..DE]         ; /* Drive Double Density select.                                    */
+                                                       /* MZ-700 Memory Management Ports                                  */
+                                                       /*                                                                 */
+                                                       /*             |0000:0FFF|1000:CFFF|D000:FFFF                      */
+                                                       /*             ------------------------------                      */
+                                                       /*  OUT 0xE0 = |DRAM     |         |                               */
+                                                       /*  OUT 0xE1 = |         |         |DRAM                           */
+                                                       /*  OUT 0xE2 = |MONITOR  |         |                               */
+                                                       /*  OUT 0xE3 = |         |         |Memory Mapped I/O              */
+                                                       /*  OUT 0xE4 = |MONITOR  |DRAM     |Memory Mapped I/O              */
+                                                       /*  OUT 0xE5 = |         |         |Inhibit                        */
+                                                       /*  OUT 0xE6 = |         |         |<return>                       */
+INHROMSETEN  = IORQn & WRn & IOADDR:[E5..E5]         ; /* Enable Inhibit memory paging logic                              */
+INHROMCLREN  = IORQn & WRn & IOADDR:[E6..E6]         ; /* Disable Inhibit memory paging logic                             */
+DISROMSETEN  = IORQn & WRn & IOADDR:[E3..E4]         ; /* Disable on-board ROM                                            */
+DISROMCLREN  = IORQn & WRn & IOADDR:[E1..E1]         ; /* Enable on-board ROM                                             */
+INTENEN      = IORQn & IOADDR:[E7..E7]               ; /* Enable/Disable interrupts                                       */
+
+/* Assign output pins based on equations. */
+IOBUSDIRn    = WD1773SELR                            ; /* Switch bi-directional 74LS242 from A->B, WD1773 output data.    */
+FDCRESETn    = RESET                                 ; /* System RESET                                                    */
+FDCn         = WD1773SELR # WD1773SELW               ; /* Select WD1773 Controller                                        */
+SIDEn        = SIDESEL                               ; /* Select Side select latch                                        */
+DRIVEn       = DRIVESEL                              ; /* Select Drive number select latch                                */
+DDENn        = DDENSEL                               ; /* Select Double Density enable latch                              */
+
+/* MZ-700 Memory paging logic */
+DISROMSET    = DISROMSETEN                           ; /* Disable on-board ROM                                            */
+DISROMCLR    = DISROMCLREN # RESET                   ; /* Enable on-board ROM                                             */
+INHROMSET    = INHROMSETEN                           ; /* Enable Inhibit memory paging logic                              */
+INHROMCLR    = INHROMCLREN # RESET                   ; /* Disable Inhibit memory paging logic                             */
+
+/* Interrupt enable logic */
+INTEN.D      = WRn                                   ; /* Write to 0xE7 enables interrupts, read disables interrupts.     */
+INTEN.SP     = OFF                                   ; /* Preset not used.                                                */
+INTEN.AR     = RESET                                 ; /* System RESET disables interrupts.                               */
+INTCLK       = INTENEN                               ; /* Clock input is fed from 0xE7 decoding output.                   */

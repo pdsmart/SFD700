@@ -1,0 +1,4 @@
+MZ-700 - Fully working
+MZ-80A - needs resistor to vcc on DRQ, CPM on MZ-80A wont boot, could be timing, need to disassemble CPM FDC code to detect what it is doing different to Sharp
+software. FDOS boots fine.
+Changes needed: GAL16V8 pin 12 to output as ROMA10, pin 18 used for input mode0 in order to use registered mode as DRQ needs sample and hold.
