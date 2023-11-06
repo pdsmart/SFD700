@@ -1,4 +1,7 @@
 # SFD-700
+
+<b>06/11/2023 - The designs in this repository are v1.0 and not suitable to be built. I have made two iterations since this design, v1.2 being stable just requires additional firmware development. This will be released in due course, please do not invest time with v1.0 other than to study it.<b>
+
 A Floppy Disk Interface card for the Sharp MZ series of machines (MZ-80B/MZ-80A/MZ-700/MZ-800/MZ-1500/MZ-2000/MZ-2200).
 
 This project is based on an iconic floppy disk interface card from the 1980's by the Aachen based company, Kersten & Partner GmbH. The company produced two cards,
