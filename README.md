@@ -1,6 +1,12 @@
 # SFD-700
 
-<b>06/11/2023 - The designs in this repository are v1.0 and not suitable to be built. I have made two iterations since this design, v1.2 being stable just requires additional firmware development and can be seen here https://twitter.com/engineerswork1/status/1692268807077663026. This will be pushed to github as a release in due course, please do not invest time with v1.0 other than to study it.</b>
+Repository updated 08/11/2023
+
+v1.0 - Functions in most machines but requires MZ-700 memory mapping logic if used outside of an MZ-1U06 expansion box.
+v1.1 - Functions but restrictions imposed with the GAL registers (ie. one clock all register) it couldnt satisfy my latest requirements, ie. MZ-700 memory mapping logic and Flash ROM paging.
+v1.2 - Hardware functions well on all machines tested (MZ-80A, MZ-700, MZ-1500, MZ-2000) and updates made to the Rom Filing System which basically works but has a few bugs I need to work out (fully functions as an FDC just the ROM based component of RFS has a bug and also I want to add FDC commands to the RFS Monitor). Also started updating CP/M and Basic (SA-5510, NASCOM Basic etc).
+
+Documentation needs to be updated as it is out of date on my website, wip!
 
 A Floppy Disk Interface card for the Sharp MZ series of machines (MZ-80B/MZ-80A/MZ-700/MZ-800/MZ-1500/MZ-2000/MZ-2200).
 
@@ -14,3 +20,5 @@ To address the requirement of a floppy interface for the Sharp MZ-700 and MZ-80A
 address the CPU speed shortcomings. I thus decided, based on the SFD-800 schematics, to create a version 2 of the SFD-700 design which would work in all the Sharp MZ series computers.
 
 Please see my website (in due course), https://eaw.app for more documentation and any recent updates.
+
+If you want to build a v1.2 card, I have 6 boards spare I can ship, just pay me for the postage.
