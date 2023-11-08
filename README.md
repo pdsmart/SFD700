@@ -2,9 +2,9 @@
 
 Repository updated 08/11/2023
 
-v1.0 - Functions in most machines but requires MZ-700 memory mapping logic if used outside of an MZ-1U06 expansion box.
+v1.0 - Functions in most machines, albeit, for an MZ-700 it requires MZ-700 memory mapping logic if used outside of an MZ-1U06 expansion box. Recommend only to view, not to build.
 
-v1.1 - Functions but restrictions imposed with the GAL registers (ie. one clock all register) it couldnt satisfy my latest requirements, ie. MZ-700 memory mapping logic and Flash ROM paging.
+v1.1 - Functions but restrictions imposed with the GAL registers (ie. one clock all register) it couldnt satisfy my latest requirements, ie. MZ-700 memory mapping logic and Flash ROM paging. - Recommend only to view, not to build.
 
 v1.2 - Hardware functions well on all machines tested (MZ-80A, MZ-700, MZ-1500, MZ-2000) and updates made to the Rom Filing System which basically works but has a few bugs I need to work out (fully functions as an FDC just the ROM based component of RFS has a bug and also I want to add FDC commands to the RFS Monitor). Also started updating CP/M and Basic (SA-5510, NASCOM Basic etc).
 
