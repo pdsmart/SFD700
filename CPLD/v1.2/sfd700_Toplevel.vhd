@@ -3,10 +3,10 @@
 -- Name:            sfd700_Toplevel.vhd
 -- Created:         July 2023
 -- Author(s):       Philip Smart
--- Description:     SFD700 CPLD configuration file.
+-- Description:     SFD700 CPLD Top Level file.
 --                                                     
---                  This module contains parameters for the CPLD in the SFD700 Floppy Disk Interface
---                  project.
+--                  This module contains the top level description between the CPLD pins and the SFD700
+--                  device logic.
 --
 -- Credits:         
 -- Copyright:       (c) 2018-23 Philip Smart <philip.smart@net2net.org>

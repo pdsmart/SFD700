@@ -3,10 +3,10 @@
 -- Name:            sfd700_pkg.vhd
 -- Created:         July 2023
 -- Author(s):       Philip Smart
--- Description:     SFD700 CPLD configuration file.
+-- Description:     SFD700 CPLD package file.
 --                                                     
---                  This module contains parameters for the CPLD in the SFD700 Floppy Disk Interface
---                  project.
+--                  This module contains static declarations and functions for the SFD700 Floopy Disk
+--                  Interface project.
 --
 -- Credits:         
 -- Copyright:       (c) 2018-23 Philip Smart <philip.smart@net2net.org>

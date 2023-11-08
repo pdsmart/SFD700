@@ -3,9 +3,9 @@
 -- Name:            sfd700.vhd
 -- Created:         July 2023
 -- Author(s):       Philip Smart
--- Description:     SFD700 CPLD configuration file.
+-- Description:     SFD700 CPLD device logic definition file.
 --                                                     
---                  This module contains parameters for the CPLD in the SFD700 Floppy Disk Interface
+--                  This module contains the logic required to implement the SFD700 Floppy Disk Interface
 --                  project.
 --
 -- Credits:         
