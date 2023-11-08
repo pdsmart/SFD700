@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "SFD700")(type "KiCad")(uri "${KIPRJMOD}/SFD700.kicad_sym")(options "")(descr ""))
+  (lib (name "Custom")(type "KiCad")(uri "${KIPRJMOD}/Custom.kicad_sym")(options "")(descr ""))
+)

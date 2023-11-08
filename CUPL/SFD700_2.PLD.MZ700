@@ -1,0 +1,48 @@
+Name         SFD700_GAL2 ;
+PartNo       GAL16V8 ;
+Date         22/05/2023 ;
+Revision     01 ;
+Designer     Philip Smart ;
+Company      engineers@work ;
+Assembly     SFD700 ;
+Location      ;
+Device       g16v8 ;
+
+/* *************** CONSTANTS ********************** */
+$DEFINE ON  'b'1
+$DEFINE OFF 'b'0
+
+/* *************** INPUT PINS ********************* */
+PIN  1       = CLK                                   ; /* Registered clock input                                          */ 
+PIN  2       = A10                                   ; /* Address bus A10                                                 */ 
+PIN  3       = A11                                   ; /*             A11                                                 */ 
+PIN  4       = A12                                   ; /*             A12                                                 */ 
+PIN  5       = A13                                   ; /*             A13                                                 */ 
+PIN  6       = A14                                   ; /*             A14                                                 */ 
+PIN  7       = A15                                   ; /*             A15                                                 */ 
+PIN  8       = !MREQn                                ; /* Z80 MREQ active low                                             */ 
+PIN  9       = !RDn                                  ; /* Z80 RD active low                                               */ 
+PIN 12       = MODESEL0                              ; /* Mode selection bit 0                                            */ 
+PIN 13       = MODESEL1                              ; /* Mode selection bit 1                                            */ 
+PIN 14       = ROMINH                                ; /* Rom select inhibit                                              */ 
+PIN 15       = ROMDIS                                ; /* Rom select disable                                              */ 
+PIN 16       = DRQ                                   ; /* FDC Data Request                                                */ 
+
+/* *************** OUTPUT PINS ******************** */
+PIN 17       = ROMA15                                ; /* ROM A15                                                         */ 
+PIN 18       = ROMA10                                ; /* ROM A10                                                         */ 
+PIN 19       = !ROMCSn                               ; /* ROM Chip Select                                                 */ 
+
+/* Decoder equations. */
+FIELD HIADDR = [A15..A12]                            ; /* Address lines considered for ROM device.                        */
+ROMOUTSEL    = MREQn & RDn & HIADDR:[F000..FFFF] & !ROMDIS & !ROMINH ; /* Rom Select.                                     */
+
+/* Assign output pins based on equations. */
+ROMCSn.D       = ROMOUTSEL                             ;
+ROMA15.D       = MODESEL1;
+ROMA10.D       = (MODESEL1 & ROMOUTSEL & !A10) # (!MODESEL1 & ROMOUTSEL & DRQ);
+MODESEL0.OE = OFF;
+MODESEL1.OE = OFF;
+ROMINH.OE   = OFF;
+ROMEN.OE    = OFF;
+DRQ.OE      = OFF;
